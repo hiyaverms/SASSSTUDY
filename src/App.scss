@@ -1,0 +1,184 @@
+@use "sass:color";
+@use "sass:map";
+
+@use './styles/variables' as v;
+@use './styles/mixins' as m;
+
+$categories: (
+  "lecture": #4a90e2,
+  "project": #f5a623,
+  "discussion": #7ed321
+);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: v.$gray;
+  color: v.$dark;
+  overflow-x: hidden; 
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%; 
+  
+  .sidebar {
+    width: v.$sidebar-width;
+    min-width: v.$sidebar-width;
+    background-color: v.$dark;
+    color: v.$light;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    overflow: hidden; 
+    white-space: nowrap; 
+    z-index: 10; 
+
+    h2 {
+      color: v.$primary;
+      margin-bottom: 2.5rem;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      li {
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: v.$border-radius;
+        opacity: 0.6;
+        cursor: pointer;
+        transition: 0.2s;
+        
+        &:hover { 
+          opacity: 1; 
+          color: v.$primary;
+          background: rgba(v.$light, 0.05);
+        }
+
+        &.active {
+          opacity: 1;
+          background: rgba(v.$primary, 0.15);
+          color: v.$primary;
+          font-weight: bold;
+        }
+      }
+    }
+
+    @include m.respond-to("mobile") {
+      width: 80px;
+      min-width: 80px;
+      padding: 2rem 1rem;
+      text-align: center;
+      h2, nav ul li span { opacity: 0; pointer-events: none; }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; 
+    background-color: v.$gray;
+
+    header {
+      background: v.$light;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      width: 100%;
+      
+      h1 { font-size: 1.25rem; }
+    }
+
+    .view-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+}
+
+.stats-grid {
+  display: grid;
+  // responsive grid
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+
+  @each $name, $color in $categories {
+    .card-#{$name} {
+      @include m.glass-card(v.$light, true);
+      border-top: 4px solid $color;
+      .category-label { color: $color; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; }
+      p { font-size: 2.2rem; font-weight: bold; margin: 0.5rem 0; }
+      h3 { font-size: 0.9rem; color: #666; font-weight: 400; }
+    }
+  }
+}
+
+.progress-section {
+  padding: 0 2rem 2rem;
+  .progress-container {
+    background: color.adjust(v.$gray, $lightness: -5%);
+    border-radius: 50px;
+    height: 12px;
+    overflow: hidden;
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, v.$primary, v.$secondary);
+      width: 100%; 
+      border-radius: 50px;
+    }
+  }
+  span { display: block; margin-top: 10px; font-size: 0.85rem; font-weight: 600; color: v.$secondary; }
+}
+
+.archive-list {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .list-header, .list-item {
+    display: grid;
+    grid-template-columns: 60px 1fr 120px;
+    padding: 15px 20px;
+    background: v.$light;
+    border-radius: v.$border-radius;
+    align-items: center;
+    gap: 15px; 
+  }
+
+  .list-header {
+    background: transparent;
+    font-weight: bold;
+    color: #888;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .list-item {
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.2s;
+    &:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    span:first-child { font-weight: bold; color: v.$primary; }
+    
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-align: center;
+      &.completed { background: rgba(v.$secondary, 0.1); color: v.$secondary; }
+      &.upcoming { background: #f0f0f0; color: #888; }
+    }
+  }
+}
