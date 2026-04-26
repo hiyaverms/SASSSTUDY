@@ -64,22 +64,22 @@ return (
                 {/* Lectures */}
                 <div className="card-lecture">
                   <span className="category-label">Lectures</span>
-                  <p>21 Sessions</p>
-                  <h3>Knowledge Base</h3>
+                  <p>21 Classes</p>
+                  <h3>Gaining Knowledge</h3>
                 </div>
 
                 {/* Projects */}
                 <div className="card-project">
                   <span className="category-label">Mini Projects</span>
                   <p>6 Builds</p>
-                  <h3>Hands-on Code</h3>
+                  <h3>Applying Skills</h3>
                 </div>
 
                 {/* Discussions */}
                 <div className="card-discussion">
                   <span className="category-label">Discussions</span>
-                  <p>13 Threads</p>
-                  <h3>Peer Review</h3>
+                  <p>13 Labs</p>
+                  <h3>Exchanging Ideas</h3>
                 </div>
               </section>
 
